@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
-
+// import addFriendForm from './addFriendForm';
 
 
 const Friends = () => {
@@ -28,10 +28,13 @@ return (
     <div>
         {/* {console.log(frend)} */}
         <h1>Friends List</h1>
+        <h3>Friends add</h3>
+
+        
 
     {frend.map(f => {
     return(
-        <div>
+        <div className='card'>
             <h2>{f.name}</h2>
             <h2>{f.age}</h2>
             <h2>{f.email}</h2>

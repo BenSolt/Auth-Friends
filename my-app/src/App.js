@@ -5,6 +5,7 @@ import './App.css';
 import Login from './components/Login';
 import Friends from './components/Friends';
 import PrivateRoute from './components/PrivateRoute';
+import AddFriendForm from './components/AddFriendForm';
 
 function App() {
   return (
@@ -14,10 +15,12 @@ function App() {
    {/* <Login/> */}
     <Switch>
           <Route path="/login" component={Login} />
+          
           <PrivateRoute path="/protected">
+            <AddFriendForm/>
             <Friends />
           </PrivateRoute>
-          
+         
           <Route
             render={() => {
               return <img src="https://http.cat/404" />;
