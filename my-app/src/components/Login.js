@@ -1,24 +1,17 @@
-import React from "react";
-import axios from "axios";
-
-/*
-1. send POST api
-2. if successful, save token
-3. if not, show message
-*/
+import React from 'react';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 class Login extends React.Component {
   state = {
     credentials: {
-      username: "",
-      password: ""
-    },
-    isLoggedIn: false
+      username: '',
+      password: ''
+    }
   };
 
   handleChange = e => {
     this.setState({
-      info: {
+      credentials: {
         ...this.state.credentials,
         [e.target.name]: e.target.value
       }
@@ -27,31 +20,20 @@ class Login extends React.Component {
 
   login = e => {
     e.preventDefault();
-    axios
-      .post(// http://localhost:5000/api/login,
-        this.state.credentials
-      )
-      .then(response => {
-        console.log("response", response);
-        const { data } = response;
-
-        sessionStorage.setItem("token", data.payload);
-        this.setState({ ...this.state, isLoggedIn: true });
-      });
+    // axiosWithAuth ==> ?? an axios instance; .post() ==> ?? promise
+    axiosWithAuth()
+      .post('/api/login', this.state.credentials)
+      .then(res => {
+        localStorage.setItem('token', res.data.payload);
+        // redirect to the apps main page?
+        this.props.history.push('/protected');
+      })
+      .catch(err => console.log(err));
   };
-
-  componentDidMount() {
-    if (sessionStorage.getItem("token")) {
-      this.setState({ ...this.state, isLoggedIn: true });
-    } else {
-      this.setState({ ...this.state, isLoggedIn: false });
-    }
-  }
 
   render() {
     return (
       <div>
-        <h2>{this.state.isLoggedIn ? "Logged In!" : "Please login"}</h2>
         <form onSubmit={this.login}>
           <input
             type="text"
