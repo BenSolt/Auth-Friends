@@ -9,7 +9,7 @@ import axios from "axios";
 
 class Login extends React.Component {
   state = {
-    info: {
+    credentials: {
       username: "",
       password: ""
     },
@@ -19,7 +19,7 @@ class Login extends React.Component {
   handleChange = e => {
     this.setState({
       info: {
-        ...this.state.info,
+        ...this.state.credentials,
         [e.target.name]: e.target.value
       }
     });
@@ -28,9 +28,8 @@ class Login extends React.Component {
   login = e => {
     e.preventDefault();
     axios
-      .post(
-        // api link,
-        this.state.info
+      .post(// http://localhost:5000/api/login,
+        this.state.credentials
       )
       .then(response => {
         console.log("response", response);
@@ -52,18 +51,18 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <h2>{this.state.isLoggedIn ? "LOGGED IN!" : "Please login"}</h2>
+        <h2>{this.state.isLoggedIn ? "Logged In!" : "Please login"}</h2>
         <form onSubmit={this.login}>
           <input
             type="text"
             name="username"
-            value={this.state.info.username}
+            value={this.state.credentials.username}
             onChange={this.handleChange}
           />
           <input
             type="password"
             name="password"
-            value={this.state.info.password}
+            value={this.state.credentials.password}
             onChange={this.handleChange}
           />
           <button>Log in</button>
